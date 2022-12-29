@@ -63,15 +63,16 @@ def get_screenings_combinations(screenings: List[CinemaScreening], max_depth=MAX
     return filtered_combinations
 
 
-def compute_possible_combinations(max_depth, screenings, screenings_by_movie, time_between_screenings) -> List[Tuple[CinemaScreening]]:
+def compute_possible_combinations(max_depth, screenings, screenings_by_movie, time_between_screenings) -> List[
+    Tuple[CinemaScreening]]:
     combinations = initialize_combinations_with_single_screenings(screenings)
     depth = 1
     while depth < max_depth:
         new_combinations = set()
         for combination in combinations:
             new_combinations = new_combinations.union(extend_combination_with_other_screenings(combination,
-                                                                         screenings_by_movie,
-                                                                         time_between_screenings))
+                                                                                               screenings_by_movie,
+                                                                                               time_between_screenings))
         combinations = new_combinations.copy()
         depth += 1
     return list(combinations)
@@ -93,7 +94,8 @@ def initialize_combinations_with_single_screenings(screenings):
     return combinations
 
 
-def extend_combination_with_other_screenings(combination: Tuple[CinemaScreening], screenings_by_movie: dict[str, List[CinemaScreening]],
+def extend_combination_with_other_screenings(combination: Tuple[CinemaScreening],
+                                             screenings_by_movie: dict[str, List[CinemaScreening]],
                                              time_between_screenings: int) -> Set[Tuple[CinemaScreening]]:
     """
     Extends the combination in parameter with other screenings of other movies. 
@@ -103,7 +105,8 @@ def extend_combination_with_other_screenings(combination: Tuple[CinemaScreening]
     anything_added = False
     for other_movie, other_movie_screenings in screenings_by_movie.items():
         if other_movie not in [screening.movie for screening in combination]:
-            first_available_screening = find_first_available_screening(other_movie_screenings, combination[-1], time_between_screenings)
+            first_available_screening = find_first_available_screening(other_movie_screenings, combination[-1],
+                                                                       time_between_screenings)
             if first_available_screening:
                 new_combinations.add(combination + (first_available_screening,))
                 anything_added = True
@@ -131,8 +134,9 @@ def read_cinema_screenings_from_csv(file_path):
     return screenings
 
 
-def get_screenings_combinations_from_csv(file_path):
-    return get_screenings_combinations(read_cinema_screenings_from_csv(file_path))
+def get_screenings_combinations_from_csv(file_path, max_depth=MAX_MOVIES,
+                                         time_between_screenings=MIN_WAIT_TIME_BETWEEN_SCREENINGS):
+    return get_screenings_combinations(read_cinema_screenings_from_csv(file_path), max_depth, time_between_screenings)
 
 
 def does_screening_intersect(screening1: CinemaScreening, screening2: CinemaScreening,

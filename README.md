@@ -8,4 +8,8 @@ It takes a csv file as an input, an example is given in [resources/screenings.cs
 
 To use it, run the following command:
 
-    python main.py
+    python3 cinema_planner.py <path to csv file> [options]
+
+To get a list of all options, run:
+
+    python3 cinema_planner.py --help

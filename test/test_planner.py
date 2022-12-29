@@ -1,5 +1,4 @@
-import pytest
-from planner import CinemaScreening, get_screenings_combinations, read_cinema_screenings_from_csv
+from cinemaPlanner.planner import CinemaScreening, get_screenings_combinations, read_cinema_screenings_from_csv
 
 DEFAULT_MAX_DEPTH = 3
 DEFAULT_MIN_WAIT_TIME_BETWEEN_SCREENINGS = 0
@@ -65,7 +64,7 @@ def test_multiple_screenings_of_four_movies():
            set(expected_screenings)
 
 def csv_test_two_movies():
-    screenings = read_cinema_screenings_from_csv("test/resources/screenings_two_movies.csv")
+    screenings = read_cinema_screenings_from_csv("resources/screenings_two_movies.csv")
     combinations = get_screenings_combinations(screenings)
     assert combinations != []
     assert [screenings[2], screenings[6]] in combinations
@@ -76,7 +75,7 @@ def csv_test_two_movies():
 
 
 def csv_test_three_movies():
-    screenings = read_cinema_screenings_from_csv("test/resources/screenings_three_movies.csv")
+    screenings = read_cinema_screenings_from_csv("resources/screenings_three_movies.csv")
     combinations = get_screenings_combinations(screenings)
     assert combinations != []
     for combination in combinations:
